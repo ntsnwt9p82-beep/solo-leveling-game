@@ -12,7 +12,6 @@ type QuestTask = {
 let level = 1;
 let xp = 0;
 let xpToNextLevel = 100;
-let lastTitle = getPlayerTitle();
 let dailyStreak = 0;
 let lastCompletedDate: string | null = null;
 let statPoints = 0;
@@ -112,7 +111,7 @@ function triggerScreenShake() {
   if (!panel) return;
 
   panel.classList.remove("shake");
-  void panel.offsetWidth; // force reflow
+  (panel as HTMLElement).offsetWidth;
   panel.classList.add("shake");
 }
 
@@ -292,7 +291,6 @@ function gainXP(amount: number) {
       const afterTitle = getPlayerTitle();
       if (beforeTitle !== afterTitle) {
         triggerRankUpAnimation(afterTitle);
-        lastTitle = afterTitle;
       }
     });
   }
@@ -434,7 +432,7 @@ function triggerLevelUpFlame() {
   if (!bar) return;
 
   bar.classList.remove("level-up");
-  void bar.offsetWidth; // force reflow
+  (bar as HTMLElement).offsetWidth; // ✅ correct
   bar.classList.add("level-up");
 }
 
